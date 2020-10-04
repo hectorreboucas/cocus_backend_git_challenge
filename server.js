@@ -3,6 +3,8 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const controller = require('./controller');
 
+const { CommonError, InternalServerError } = require('./utils/exceptions');
+
 (async () => {
 
     let app = express();
@@ -14,6 +16,11 @@ const controller = require('./controller');
     app.get('/', swaggerUi.setup(document, false));
 
     app.get('/repo', controller.getRepoInfo);
+
+    app.use((error, req, res, next) => {
+        const responseError = error instanceof CommonError ? error : new InternalServerError();
+        res.status(responseError.status).json(error).send();
+    });
 
     const port = 3000;
 
