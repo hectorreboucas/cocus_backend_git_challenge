@@ -1,0 +1,114 @@
+openapi: "3.0.0"
+info:
+  description: "Cocus Git Backend Challenge API"
+  version: "1.0.0"
+  title: "Cocus Git Backend Challenge API"
+servers:
+  - description: LOCAL
+    url: http://localhost:3000/
+
+security:
+    - Authentication: []
+
+paths:
+  /repo:
+    get:
+      tags:
+        - "Repository"
+      summary: "get repo info"
+      description: "get repo info"
+      operationId: "getRepoInfo"
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        200:
+          description: "Data retrieved successfully"
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/RepoInfo"
+        404:
+          $ref: "#/components/responses/NotFoundError"
+        406:
+          $ref: "#/components/responses/NotAcceptableError"
+        500:
+          $ref: "#/components/responses/UnexpectedError"
+
+# define reusable components:
+
+components:
+  securitySchemes:
+    Authentication:
+      description: Auth0 Authorization token
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    username:
+      name: username
+      in: query
+      description: repository username
+      required: true
+      schema:
+        type: string
+
+  responses:
+    InvalidToken:
+      description: "Invalid Token"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+    UnauthorizedUserForFund:
+      description: "User not authorized for fund"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+            
+    UnexpectedError:
+      description: "Unexpected Error"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+    NotAcceptableError:
+      description: "Not acceptable error"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+    NotFoundError:
+      description: "Not found error"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    RepoInfo:
+      properties:
+        repositoryName:
+          type: string
+        ownerLogin:
+          type: string
+        branches:
+          type: array
+          items:
+            properties:
+              branchName:
+                type: string
+              lastCommitSha:
+                type: string
+    Error:
+      type: "object"
+      properties:
+        status:
+          type: "integer"
+          format: "int32"
+        Message:
+          type: "string"

@@ -1,0 +1,18 @@
+[
+    {
+        "name": "develop",
+        "commit": {
+            "sha": "1513e9d3415231c22154677720e68167ce08f664",
+            "url": "https://api.github.com/repos/hectorreboucas/issuemanager/commits/1513e9d3415231c22154677720e68167ce08f664"
+        },
+        "protected": false
+    },
+    {
+        "name": "master",
+        "commit": {
+            "sha": "1513e9d3415231c22154677720e68167ce08f664",
+            "url": "https://api.github.com/repos/hectorreboucas/issuemanager/commits/1513e9d3415231c22154677720e68167ce08f664"
+        },
+        "protected": false
+    }
+]
