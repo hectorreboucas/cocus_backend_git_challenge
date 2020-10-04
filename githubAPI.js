@@ -1,5 +1,6 @@
 const axios = require('axios').default;
 const { getErrorByCode } = require('./utils/exceptions');
+const logger = require('./utils/logger');
 
 const baseURL = "https://api.github.com";
 const options = { headers: { Accept: "Accept: application/vnd.github.v3+json" } };

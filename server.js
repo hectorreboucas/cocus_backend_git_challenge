@@ -2,6 +2,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const controller = require('./controller');
+const logger = require('./utils/logger');
 
 const { CommonError, InternalServerError, NotAcceptedError } = require('./utils/exceptions');
 
@@ -22,6 +23,7 @@ const { CommonError, InternalServerError, NotAcceptedError } = require('./utils/
     app.get('/repo', controller.getRepoInfo);
 
     app.use((error, req, res, next) => {
+        logger.error(error);
         const responseError = error instanceof CommonError ? error : new InternalServerError();
         res.status(responseError.status).json(error).send();
     });
