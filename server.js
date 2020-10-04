@@ -3,7 +3,7 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const controller = require('./controller');
 
-const { CommonError, InternalServerError } = require('./utils/exceptions');
+const { CommonError, InternalServerError, NotAcceptedError } = require('./utils/exceptions');
 
 (async () => {
 
@@ -14,6 +14,10 @@ const { CommonError, InternalServerError } = require('./utils/exceptions');
     const document = YAML.load("openAPI.yaml");
     app.use('/', swaggerUi.serve);
     app.get('/', swaggerUi.setup(document, false));
+
+    app.get('/repo', (req, res, next) =>
+        req.headers.accept == "application/json" ? next() : next(new NotAcceptedError())
+    );
 
     app.get('/repo', controller.getRepoInfo);
 
