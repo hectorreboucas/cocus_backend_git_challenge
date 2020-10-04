@@ -1,0 +1,10 @@
+{
+  "name": "cocous_git_challenge",
+  "version": "1.0.0",
+  "description": "Cocus git backend challenge",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Hector Rebouças",
+  "license": "ISC",
+  "dependencies": {}
+}
